@@ -1,0 +1,147 @@
+CREATE TABLE `account` (
+  `ACCOUNT_ID` int(11) NOT NULL COMMENT '账务账号ID',
+  `RECOMMENDRE_ID` int(11) DEFAULT NULL COMMENT '推荐人账务账号ID',
+  `LOGIN_NAME` varchar(255) NOT NULL COMMENT '登录系统的名称，用于“用户自服务”系统',
+  `LOGIN_PASSWD` varchar(255) NOT NULL COMMENT '登录系统的口令',
+  `STATUS` int(11) NOT NULL COMMENT '0：开通,1：暂停,2：删除',
+  `CREATE_DATE` date DEFAULT NULL COMMENT '创建日期',
+  `PAUSE_DATE` date DEFAULT NULL COMMENT '暂停日期（开通状态时为空）',
+  `CLOSE_DATE` date DEFAULT NULL COMMENT '删除日期',
+  `REAL_NAME` varchar(255) NOT NULL COMMENT '客户姓名',
+  `IDCARD_NO` varchar(255) NOT NULL COMMENT '身份证号码',
+  `BIRTHDATE` date DEFAULT NULL COMMENT '出生日期',
+  `GENDER` bit(1) NOT NULL COMMENT '性别 0：男 1：女',
+  `OCCUPATION` varchar(255) DEFAULT NULL COMMENT '职业',
+  `TELEPHONE` varchar(255) NOT NULL COMMENT '联系电话（座机或手机）',
+  `EMAIL` varchar(255) DEFAULT NULL COMMENT '电子邮件',
+  `MAILADDRESS` varchar(255) DEFAULT NULL COMMENT '通信地址',
+  `ZIPCODE` varchar(255) DEFAULT NULL COMMENT '邮编',
+  `QQ` varchar(255) DEFAULT NULL COMMENT 'QQ',
+  `LAST_LOGIN_TIME` date DEFAULT NULL COMMENT '最后一次登录时间',
+  `LAST_LOGIN_IP` varchar(255) DEFAULT NULL COMMENT '最后一次登录IP地址',
+  PRIMARY KEY (`ACCOUNT_ID`),
+  UNIQUE KEY `actable_uni_LOGIN_NAME` (`LOGIN_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `admin_info` (
+  `ADMIN_ID` int(11) NOT NULL COMMENT '主键，管理员ID',
+  `ADMIN_CODE` varchar(255) NOT NULL COMMENT '管理员账号',
+  `PASSWORD` varchar(255) NOT NULL COMMENT '密码',
+  `NAME` varchar(255) NOT NULL COMMENT '姓名',
+  `TELPHONE` varchar(255) DEFAULT NULL COMMENT '电话',
+  `EMAIL` varchar(255) DEFAULT NULL COMMENT '电子邮件',
+  `ENROLLDATE` date NOT NULL COMMENT '创建日期',
+  PRIMARY KEY (`ADMIN_ID`),
+  UNIQUE KEY `actable_uni_ADMIN_CODE` (`ADMIN_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `admin_role` (
+  `ADMIN_ID` int(11) NOT NULL COMMENT '管理ID，关联管理员表联合主键',
+  `ROLE_ID` int(11) NOT NULL COMMENT '角色ID，关联角色表联合主键',
+  PRIMARY KEY (`ADMIN_ID`),
+  UNIQUE KEY `actable_uni_ROLE_ID` (`ROLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bill` (
+  `BILL_ID` int(11) NOT NULL COMMENT '主键，账单ID',
+  `ACCOUNT_ID` int(11) NOT NULL COMMENT '账务账号ID，关联账务账号表',
+  `BILL_MONTH` varchar(255) NOT NULL COMMENT '账单月份，格式如：201701',
+  `COST` decimal(10,2) NOT NULL COMMENT '费用',
+  `PAYMENT_MODE` int(11) DEFAULT NULL COMMENT '0：现金 1：银行转账，2：邮局汇款；3：其他',
+  `PAY_STATE` bit(1) DEFAULT NULL COMMENT '支付状态,0：未支付；1：已支付，默认为0',
+  PRIMARY KEY (`BILL_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bill_item` (
+  `ITEM_ID` int(11) NOT NULL COMMENT '主键，账单条目ID',
+  `BILL_ID` int(11) NOT NULL COMMENT '账单ID，关联账单信息表',
+  `SERVICE_ID` int(11) NOT NULL COMMENT '业务账号ID，关联业务信息表',
+  `COST` decimal(10,2) NOT NULL COMMENT '所花费的费用',
+  PRIMARY KEY (`ITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `cost` (
+  `COST_ID` int(11) NOT NULL COMMENT '主键，资费ID',
+  `NAME` varchar(255) NOT NULL COMMENT '资费名称',
+  `BASE_DURATION` int(11) DEFAULT NULL COMMENT '包在线时长',
+  `BASE_COST` decimal(10,2) DEFAULT NULL COMMENT '月固定费，可能有小数',
+  `UNIT_COST` decimal(10,2) DEFAULT NULL COMMENT '单位费用(元/小时)',
+  `STATUS` bit(1) NOT NULL COMMENT '0:开通，1：暂停；',
+  `DESR` varchar(255) DEFAULT NULL COMMENT '对资费信息的说明',
+  `CREATIME` date DEFAULT NULL COMMENT '创建日期',
+  `STARTIME` date DEFAULT NULL COMMENT '启用日期',
+  `COST_TYPE` varchar(255) DEFAULT NULL COMMENT '1-包月，2-套餐，3-计时',
+  PRIMARY KEY (`COST_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `function_info` (
+  `FUNCTION_ID` int(11) NOT NULL COMMENT '功能ID',
+  `FUNCTION_CODE` varchar(255) NOT NULL COMMENT '功能编号',
+  `MODULE_ID` int(11) NOT NULL COMMENT '所属的模块ID，关联模块表',
+  `NAME` varchar(255) NOT NULL COMMENT '功能名称',
+  `URL` varchar(255) NOT NULL COMMENT '功能对应的URL地址',
+  PRIMARY KEY (`FUNCTION_ID`),
+  UNIQUE KEY `actable_uni_FUNCTION_CODE` (`FUNCTION_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `host` (
+  `HOST_ID` varchar(255) NOT NULL COMMENT '主键，记录UNIX服务器的ip地址',
+  `NAME` varchar(255) NOT NULL COMMENT '主机名',
+  `LOCATION` varchar(255) DEFAULT NULL COMMENT '主机所在位置',
+  PRIMARY KEY (`HOST_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `module_info` (
+  `MODULE_ID` int(11) NOT NULL COMMENT '模块ID',
+  `NAME` varchar(255) NOT NULL COMMENT '模块名称',
+  PRIMARY KEY (`MODULE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `role_info` (
+  `ROLE_ID` int(11) NOT NULL COMMENT '主键，角色ID',
+  `NAME` varchar(255) NOT NULL COMMENT '角色名称',
+  PRIMARY KEY (`ROLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `role_module` (
+  `ROLE_ID` int(11) NOT NULL COMMENT '角色ID,关联角色表联合主键',
+  `MODULE_ID` int(11) NOT NULL COMMENT '模块ID， 关联模块表联合主键',
+  PRIMARY KEY (`ROLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `service` (
+  `SERIVCE_ID` int(11) NOT NULL COMMENT '业务账号_ID',
+  `ACCOUNT_ID` int(11) NOT NULL COMMENT '账务账号ID， 关联账务账号表',
+  `UNIX_HOST` varchar(255) NOT NULL COMMENT '和OS_USERNAME做联合唯一键NOT NULL  UNIX服务器IP地址',
+  `OS_USERNAME` varchar(255) NOT NULL COMMENT '和UNIX_HOST做联合唯一键 NOT NULL	登录UNIX服务器的OS账号',
+  `STATUS` int(11) NOT NULL COMMENT '0：开通，1：暂停，2：删除',
+  `CREATE_DATE` date DEFAULT NULL COMMENT '创建日期，创建即开通',
+  `PAUSE_DATE` date DEFAULT NULL COMMENT '暂停日期',
+  `CLOSE_DATE` date DEFAULT NULL COMMENT '删除日期',
+  `COST_ID` int(11) NOT NULL COMMENT '资费编码，关联资费信息表',
+  `LOGIN_PASSWD` varchar(255) NOT NULL COMMENT '登录UNIX服务器的口令',
+  PRIMARY KEY (`SERIVCE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `service_detail` (
+  `DETAIL_ID` int(11) NOT NULL COMMENT '主键，业务详单_ID',
+  `SERVICE_ID` int(11) NOT NULL COMMENT '业务账号ID，关联业务账号表',
+  `CLIENT_HOST` varchar(255) DEFAULT NULL COMMENT 'OS账号从该IP地址登录Unix服务器',
+  `OS_USERNAME` varchar(255) DEFAULT NULL COMMENT '登录UNIX服务器的OS账号',
+  `PID` int(11) DEFAULT NULL COMMENT '进程号',
+  `LOGIN_TIME` date DEFAULT NULL COMMENT '开始登录时间',
+  `LOGOUT_TIME` date DEFAULT NULL COMMENT '退出登录时间',
+  `DURATION` decimal(10,2) DEFAULT NULL COMMENT '时长（秒）',
+  `COST` decimal(10,2) DEFAULT NULL COMMENT '费用',
+  PRIMARY KEY (`DETAIL_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `service_update_bak` (
+  `ID` int(11) NOT NULL COMMENT '主键',
+  `SERVICE_ID` int(11) NOT NULL COMMENT '业务账号ID，关联业务账号表',
+  `COST_ID` int(11) NOT NULL COMMENT '资费编号，关联资费信息表',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

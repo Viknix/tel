@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--开启Spring注解扫描，希望扫描service和dao,controller不需要Spring区处理-->
+    <context:component-scan base-package="com.itluma">
+        <!--配置哪些注解不通过Spring扫描-->
+        <!--Controller应该由SpringMVC框架管理-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+        <!--包含
+        <context:include-filter type="" expression=""></context:include-filter>-->
+    </context:component-scan>
+
+    <!--配置文件参数化（参数占位符）-->
+    <context:property-placeholder location="classpath:jdbcConfig.properties"/>
+
+    <!--配置Mysql数据源-->
+    <!--配置Druid连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <property name="initialSize" value="${jdbc.init}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+    </bean>
+
+    <!--更新为 myabtisplus(MybatisPlus的工厂)-->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--别名-->
+        <property name="typeAliasesPackage" value="com.dongqi.po"></property>
+
+        <!-- 插件注册 -->
+        <property name="plugins">
+            <list>
+                <!--分页插件-->
+                <bean class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor" />
+                <!--乐观锁插件-->
+                <bean class="com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor"></bean>
+                <!--执行分析插件-->
+                <bean class="com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor"></bean>
+            </list>
+        </property>
+
+    </bean>
+
+
+
+    <!--配置sessionFactory工厂(mybatis的工厂)
+    &lt;!&ndash;SqlMapConfig文件可以删除，直接在Spring中配置Mybatis&ndash;&gt;
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+        <property name="typeAliasesPackage" value="com.dongqi.pojo"></property>
+        <property name="dataSource" ref="dataSource"></property>
+        &lt;!&ndash;&lt;!&ndash;指定MyBatis主配置文件&ndash;&gt;&ndash;&gt;
+        &lt;!&ndash;<property name="configLocation" value="classpath:mybatis-config.xml"/>&ndash;&gt;
+    </bean>-->
+
+    <!--配置Spring框架声明式事务管理-->
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    
+    <!--配置通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="false"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置切面-->
+    <aop:config>
+        <aop:pointcut id="pt1" expression="execution(* com.itluma.service.impl.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pt1"></aop:advisor>
+    </aop:config>
+    
+</beans>

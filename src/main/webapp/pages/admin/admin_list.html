@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>路马科技－JavaDemoSystem</title>
+        <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" />
+        <script language="javascript" type="text/javascript">
+            //显示角色详细信息
+            function showDetail(flag, a) {
+                var detailDiv = a.parentNode.getElementsByTagName("div")[0];
+                if (flag) {
+                    detailDiv.style.display = "block";
+                }
+                else
+                    detailDiv.style.display = "none";
+            }
+            //重置密码
+            function resetPwd() {
+                alert("请至少选择一条数据！");
+                //document.getElementById("operate_result_info").style.display = "block";
+            }
+            //删除
+            function deleteAdmin() {
+                var r = window.confirm("确定要删除此管理员吗？");
+                document.getElementById("operate_result_info").style.display = "block";
+            }
+            //全选
+            function selectAdmins(inputObj) {
+                var inputArray = document.getElementById("datalist").getElementsByTagName("input");
+                for (var i = 1; i < inputArray.length; i++) {
+                    if (inputArray[i].type == "checkbox") {
+                        inputArray[i].checked = inputObj.checked;
+                    }
+                }
+            }
+        </script>
+        </head>
+        <body>
+<div id="header"> <img src="../images/logo.png"  alt="logo" class="left"/> <a href="#">[退出]</a> </div>
+<div id="navi">
+          <ul id="menu">
+    <li><a href="../index.html"  class="index_off"></a></li>
+    <li><a href="../role/role_list.html" class="role_off"></a></li>
+    <li><a href="admin_list.html"  class="admin_on"></a></li>
+    <li><a href="../fee/fee_list.html" class="fee_off"></a></li>
+    <li><a href="../account/account_list.html"  class="account_off"></a></li>
+    <li><a href="../service/service_list.html"  class="service_off"></a></li>
+    <li><a href="../bill/bill_list.html"  class="bill_off"></a></li>
+    <li><a href="../report/report_list.html"  class="report_off"></a></li>
+    <li><a href="../user/user_info.html"  class="information_off"></a></li>
+    <li><a href="../user/user_modi_pwd.html"  class="password_off"></a></li>
+  </ul>
+        </div>
+<div id="main">
+          <form action="" method="">
+    <div class="search_add">
+              <div> 模块：
+        <select id="selModules" class="select_search">
+                  <option>全部</option>
+                  <option>角色管理</option>
+                  <option>管理员管理</option>
+                  <option>资费管理</option>
+                  <option>账务账号</option>
+                  <option>业务账号</option>
+                  <option>账单管理</option>
+                  <option>报表</option>
+                </select>
+      </div>
+              <div>角色：
+        <input type="text" value="" class="text_search width200"/>
+      </div>
+              <div>
+        <input type="button" value="搜索" class="btn_search"/>
+      </div>
+              <input type="button" value="密码重置" class="btn_add" onClick="resetPwd();"/>
+              <input type="button" value="增加" class="btn_add" onClick="location.href='admin_add.html'/*tpa=http://demo.mycodes.net/houtai/isoakJavaDemoSystem/admin/admin_add.html*/;"/>
+            </div>
+    <div id="operate_result_info" class="operate_fail"> <img src="../images/close.png"  onClick="this.parentNode.style.display='none';"/> <span>删除失败！数据并发错误。</span> </div>
+    <div id="data">
+              <table id="datalist">
+        <tr>
+                  <th class="th_select_all"> <input type="checkbox" onClick="selectAdmins(this);"/>
+            <span>全选</span> </th>
+                  <th>管理员ID</th>
+                  <th>姓名</th>
+                  <th>登录名</th>
+                  <th>电话</th>
+                  <th>电子邮件</th>
+                  <th>授权日期</th>
+                  <th class="width100">拥有角色</th>
+                  <th></th>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>1</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="63090a02120a020d045251502312124d000c0e4d000d">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td><a class="summary" onMouseOver="showDetail(true,this);" onMouseOut="showDetail(false,this);">超级管理员...</a>
+            <div class="detail_info"> 超级管理员，角色管理员，账单管理员，报表管理员，业务账号管理员，账务账号管理员，aa，bb </div></td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify" onClick="location.href='admin_modi.html'/*tpa=http://demo.mycodes.net/houtai/isoakJavaDemoSystem/admin/admin_modi.html*/;"/>
+            <input type="button" value="删除" class="btn_delete" onClick="deleteAdmin();"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>2</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="ec86858d9d858d828bdddedfac9d9dc28f8381c28f82">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td><a class="summary" onMouseOver="showDetail(true,this);" onMouseOut="showDetail(false,this);">超级管理员...</a>
+            <div class="detail_info"> 超级管理员，角色管理员 </div></td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete" onClick="deleteAdmin();"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>3</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="402a29213129212e277172730031316e232f2d6e232e">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td><a class="summary" onMouseOver="showDetail(true,this);" onMouseOut="showDetail(false,this);">超级管理员...</a>
+            <div class="detail_info"> 超级管理员，角色管理员，账单管理员，报表管理员，业务账号管理员，账务账号管理员 </div></td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>4</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="5a30333b2b333b343d6b68691a2b2b74393537743934">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td><a class="summary" onMouseOver="showDetail(true,this);" onMouseOut="showDetail(false,this);">超级管理员</a>
+            <div class="detail_info"> 超级管理员 </div></td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>5</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="2b41424a5a424a454c1a19186b5a5a05484446054845">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td>超级管理员</td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>6</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="5f35363e2e363e31386e6d6c1f2e2e713c3032713c31">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td>超级管理员</td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>7</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="39535058485058575e080b0a794848175a5654175a57">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td>超级管理员</td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>8</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="d8b2b1b9a9b1b9b6bfe9eaeb98a9a9f6bbb7b5f6bbb6">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td>超级管理员</td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>9</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="88e2e1e9f9e1e9e6efb9babbc8f9f9a6ebe7e5a6ebe6">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td>超级管理员</td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+        <tr>
+                  <td><input type="checkbox"/></td>
+                  <td>10</td>
+                  <td>贾强</td>
+                  <td>admin</td>
+                  <td>13077332357</td>
+                  <td><a class="__cf_email__" href="javascript:if(confirm('http://demo.mycodes.net/cdn-cgi/l/email-protection  \n\n�ļ���δ�� Teleport Pro ȡ�أ���Ϊ �������·��������ʼ��ַ�����õķ�Χ��  \n\n��Ҫ�ӷ������ϴ�����'))window.location='http://demo.mycodes.net/cdn-cgi/l/email-protection'" tppabs="http://demo.mycodes.net/cdn-cgi/l/email-protection" data-cfemail="fe94979f8f979f9099cfcccdbe8f8fd09d9193d09d90">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></td>
+                  <td>2011-31-12</td>
+                  <td>超级管理员</td>
+                  <td class="td_modi"><input type="button" value="修改" class="btn_modify"/>
+            <input type="button" value="删除" class="btn_delete"/></td>
+                </tr>
+      </table>
+            </div>
+    <div id="pages"> <a href="#">上一页</a> <a href="#" class="current_page">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a> <a href="#">下一页</a> </div>
+  </form>
+        </div>
+<div id="footer">
+          <p>[源自路马的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</p>
+          <p>版权所有(C)路马教育科技有限公司 </p>
+        </div>
+</body>
+</html>
